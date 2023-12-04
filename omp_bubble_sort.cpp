@@ -22,12 +22,14 @@ void generate_random_array(vector<int> &a, int n) {
 int main(int argc, char **argv) {
 
     int phase, i, temp, n;
-    n = 1000000;
+    n = 100000;
     vector<int> a(n);
 
     generate_random_array(a, n);
-    
-    
+
+    double start_time, end_time, exec_time;
+    start_time = omp_get_wtime();
+
     for(phase = 0; phase < n; ++phase) {
         // even phase
         if(phase % 2 == 0) {
@@ -50,11 +52,10 @@ int main(int argc, char **argv) {
                     }
         }
     }
+    end_time = omp_get_wtime();
+    exec_time = end_time - start_time;
 
-    for (int i = 0; i < n; i++) {
-        printf("%d ", a[i]);
-    }
-    printf("\n");
+    printf("%f\n", exec_time);
     
     return 0;
 }
