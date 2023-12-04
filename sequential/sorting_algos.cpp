@@ -105,6 +105,34 @@ void merge_sort(std::vector<int> &nums, int start, int size){
     }
 }
 
+int partition(std::vector<int> &nums, int low, int high){
+   int pivot = low;
+   int lowIndx = pivot + 1;
+  
+   // iterating through all elements and putting them in right set
+   for (int i=pivot+1; i<=high; i++) {
+       if (nums[i] < nums[pivot] ) {
+           std::swap(nums[i], nums[lowIndx]);
+           lowIndx+=1;
+       }
+   }
+
+   // move the pivot in correct position
+   std::swap(nums[pivot], nums[lowIndx-1]);
+
+   return lowIndx-1;
+}
+
+void quick_sort(std::vector<int> &nums, int low, int high){
+    if(low >= high ) 
+        return;
+
+   int partitionIndx = partition(nums, low, high);
+
+   quick_sort(nums, low, partitionIndx - 1);
+   quick_sort(nums, partitionIndx + 1, high);
+}
+
 int main(){
     //Test array 
     std::vector<int> arr1;
@@ -136,7 +164,7 @@ int main(){
     }
     std::cout << "\n";
 
-    //  //Test array
+    // Test array
     std::vector<int> arr3;
     arr3.push_back(5);
     arr3.push_back(4);
@@ -144,12 +172,26 @@ int main(){
     arr3.push_back(2);
     arr3.push_back(1);
 
-    // //Run merge Sort
+    // Run merge Sort
     merge_sort(arr3, 0, arr3.size());
     for(int i = 0; i < arr3.size(); i++){
         std::cout << arr3[i] << " "; 
     }
+    std::cout << "\n"; 
 
+    // Test array
+    std::vector<int> arr4;
+    arr4.push_back(5);
+    arr4.push_back(4);
+    arr4.push_back(3);
+    arr4.push_back(2);
+    arr4.push_back(1);
+
+    // Run quick Sort
+    quick_sort(arr4, 0, arr4.size()-1);
+    for(int i = 0; i < arr4.size(); i++){
+        std::cout << arr4[i] << " "; 
+    }
     std::cout << "\n"; 
     
     return 0;
