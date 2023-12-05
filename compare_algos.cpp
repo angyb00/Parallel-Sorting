@@ -1,43 +1,233 @@
-#include <vector>
 #include <algorithm>
+#include <vector>
 #include <iostream>
 #include <cstdlib>
-#include <seq_algos.cpp>
+#include <random>
+#include <time.h>
+#include "sequential/seq_algos.cpp"
+#include "parallel/par_algos.cpp"
+
+//#include "parallel/par_algos.cpp"
+
+using namespace std;
 
 /****************************************************
  * Create vector of random values 
  * @param size - Size of array 
  * @param bound - Max bound for values
 *****************************************************/
-std::vector<int> random_vector(int size, int bound){
-    std::vector<int> randVector; 
-    for (int i = 0; i < size; i++){
-        randVector.push_back(rand() % bound);
+void randomize_vector(std::vector<int> &nums, int size){
+
+    // Random functionality 
+    random_device dev;
+    std::mt19937 rng(dev());
+
+    for (int i = 0; i < size; i++) {
+        nums[i] = i + 1;
     }
-    return randVector;
+    shuffle(nums.begin(), nums.end(), rng);
 }
 
 int main(){
-    // Test vectors
-    std::vector<int> test_arr_1 = random_vector(1000, 1000);
-    std::vector<int> test_arr_2 = random_vector(1000, 1000);
-    std::vector<int> test_arr_3 = random_vector(1000, 1000);
-    std::vector<int> test_arr_4 = random_vector(1000, 1000);
-    std::vector<int> test_arr_5 = random_vector(1000, 1000);
+    // TEST VECTORS 
+    std::vector<int> test_arr_1(100);
+    std::vector<int> test_arr_2(1000);
+    std::vector<int> test_arr_3(10000);
 
-    // Test Sequential Algos
-    quick_sort(test_arr_1, 0, 1);
-    
+    // ALGORITHM TIMES || [[SEQUENTIAL TIMES],[PARALLLEL TIMES]] 
+    double quick_sort_times[2][3], bubble_sort_times[2][3], merge_sort_times[2][3],  count_sort_times[2][3]; 
 
-    for (int i = 0; i < rand1.size(); i++){
-        std::cout << rand1[i] << " "; 
-    }
-    std::cout << "\n";
+    // TIMER
+    time_t startTime, endTime;
 
-    for (int i = 0; i < rand2.size(); i++){
-        std::cout << rand2[i] << " "; 
-    }
-    std::cout << "\n";
+    /* SEQUENTIAL ALGORITHMS */
+
+    // QUICK SORT
+    randomize_vector(test_arr_1, test_arr_1.size());
+    randomize_vector(test_arr_2, test_arr_2.size());
+    randomize_vector(test_arr_3, test_arr_3.size());
+
+    // Small data set
+    startTime = clock();
+    quick_sort(test_arr_1, 0, test_arr_1.size());
+    endTime = clock();
+    quick_sort_times[0][1] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // Medium data set
+    startTime = clock();
+    quick_sort(test_arr_2, 0, test_arr_2.size());
+    endTime = clock();
+    quick_sort_times[0][2] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // Large data set
+    startTime = clock();
+    quick_sort(test_arr_3, 0, test_arr_3.size());
+    endTime = clock();
+    quick_sort_times[0][3] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // BUBBLE SORT
+    randomize_vector(test_arr_1, test_arr_1.size());
+    randomize_vector(test_arr_2, test_arr_2.size());
+    randomize_vector(test_arr_3, test_arr_3.size());
+
+    // Small data set
+    startTime = clock();
+    bubble_sort(test_arr_1);
+    endTime = clock();
+    bubble_sort_times[0][1] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // Medium data set
+    startTime = clock();
+    bubble_sort(test_arr_2);
+    endTime = clock();
+    bubble_sort_times[0][2] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // Large data set
+    startTime = clock();
+    bubble_sort(test_arr_3);
+    endTime = clock();
+    bubble_sort_times[0][3] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // COUNT SORT
+    randomize_vector(test_arr_1, test_arr_1.size());
+    randomize_vector(test_arr_2, test_arr_2.size());
+    randomize_vector(test_arr_3, test_arr_3.size());
+
+    // Small data set
+    startTime = clock();
+    count_sort(test_arr_1);
+    endTime = clock();
+    count_sort_times[0][1] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // Medium data set
+    startTime = clock();
+    count_sort(test_arr_2);
+    endTime = clock();
+    count_sort_times[0][2] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // Large data set
+    startTime = clock();
+    count_sort(test_arr_3);
+    endTime = clock();
+    count_sort_times[0][3] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // COUNT SORT
+    randomize_vector(test_arr_1, test_arr_1.size());
+    randomize_vector(test_arr_2, test_arr_2.size());
+    randomize_vector(test_arr_3, test_arr_3.size());
+
+    // Small data set
+    startTime = clock();
+    merge_sort(test_arr_1, 0, test_arr_1.size());
+    endTime = clock();
+    merge_sort_times[0][1] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // Medium data set
+    startTime = clock();
+    merge_sort(test_arr_2, 0, test_arr_2.size());
+    endTime = clock();
+    merge_sort_times[0][2] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // Large data set
+    startTime = clock();
+    merge_sort(test_arr_3, 0, test_arr_3.size());
+    endTime = clock();
+    merge_sort_times[0][3] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    /* PARALLEL ALGORITHMS 
+
+    // QUICK SORT
+    randomize_vector(test_arr_1, test_arr_1.size());
+    randomize_vector(test_arr_2, test_arr_2.size());
+    randomize_vector(test_arr_3, test_arr_3.size());
+
+    // Small data set
+    startTime = clock();
+    par_quick_sort();
+    endTime = clock();
+    quick_sort_times[1][1] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // Medium data set
+    startTime = clock();
+    par_quick_sort();
+    endTime = clock();
+    quick_sort_times[1][2] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // Large data set
+    startTime = clock();
+    par_quick_sort();
+    endTime = clock();
+    quick_sort_times[1][3] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // BUBBLE SORT
+    randomize_vector(test_arr_1, test_arr_1.size());
+    randomize_vector(test_arr_2, test_arr_2.size());
+    randomize_vector(test_arr_3, test_arr_3.size());
+
+    // Small data set
+    startTime = clock();
+    par_bubble_sort(test_arr_1);
+    endTime = clock();
+    bubble_sort_times[1][1] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // Medium data set
+    startTime = clock();
+    par_bubble_sort(test_arr_1);
+    endTime = clock();
+    bubble_sort_times[1][2] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // Large data set
+    startTime = clock();
+    par_bubble_sort(test_arr_1);
+    endTime = clock();
+    bubble_sort_times[1][3] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // COUNT SORT
+    randomize_vector(test_arr_1, test_arr_1.size());
+    randomize_vector(test_arr_2, test_arr_2.size());
+    randomize_vector(test_arr_3, test_arr_3.size());
+
+    // Small data set
+    startTime = clock();
+    par_count_sort(test_arr_1);
+    endTime = clock();
+    count_sort_times[1][1] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // Medium data set
+    startTime = clock();
+    par_count_sort(test_arr_2);
+    endTime = clock();
+    count_sort_times[1][2] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // Large data set
+    startTime = clock();
+    par_count_sort(test_arr_3);
+    endTime = clock();
+    count_sort_times[1][3] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // MERGE SORT
+    randomize_vector(test_arr_1, test_arr_1.size());
+    randomize_vector(test_arr_2, test_arr_2.size());
+    randomize_vector(test_arr_3, test_arr_3.size());
+
+    // Small data set
+    startTime = clock();
+    par_merge_sort();
+    endTime = clock();
+    merge_sort_times[1][1] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // Medium data set
+    startTime = clock();
+    par_merge_sort();
+    endTime = clock();
+    merge_sort_times[1][2] = double(endTime - startTime)/CLOCKS_PER_SEC;
+
+    // Large data set
+    startTime = clock();
+    par_merge_sort();
+    endTime = clock();
+    merge_sort_times[1][3] = double(endTime - startTime)/CLOCKS_PER_SEC;
+    */
 
     return 0;
 }
