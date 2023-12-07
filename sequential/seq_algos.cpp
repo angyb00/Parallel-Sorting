@@ -3,6 +3,8 @@
 #include<random>
 #include<vector>
 
+#include "seq_algos.h"
+
 /****************************************************
  * COUNT SORT
  * @param nums - Vector to be sorted
