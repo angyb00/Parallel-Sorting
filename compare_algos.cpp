@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <random>
 #include <time.h>
+#include <fstream>
 
 #include "sequential/seq_algos.h"
 #include "parallel/par_algos.h"
@@ -34,7 +35,7 @@ int main(){
     std::vector<int> test_arr_3(10000);
 
     // ALGORITHM TIMES || [[SEQUENTIAL TIMES],[PARALLLEL TIMES]] 
-    double quick_sort_times[2][3], bubble_sort_times[2][3], merge_sort_times[2][3],  count_sort_times[2][3]; 
+    double quick_sort_times[2][3], bubble_sort_times[2][3],  count_sort_times[2][3]; 
 
     // TIMER
     time_t startTime, endTime;
@@ -179,5 +180,26 @@ int main(){
     endTime = clock();
     count_sort_times[1][2] = double(endTime - startTime)/CLOCKS_PER_SEC;
 
+
+    // CSV Output 
+    /*
+                   Algorithm1,      Algorithm2 
+    Sequential    .001,.002,.003,  .001,.002,.003
+    Parallel      .001,.002,.003,  .001,.002,.003
+    */
+
+    // Sequential Times 
+    std::ofstream times("algo_times.csv");
+    times << "Quick Sort, Bubble Sort, Count Sort\n";
+    times << quick_sort_times[0][0] << "," << quick_sort_times[0][1] << "," << quick_sort_times[0][2] << " " << 
+    bubble_sort_times[0][0] << "," <<  bubble_sort_times[0][1] << "," << bubble_sort_times[0][2] << " " << 
+    count_sort_times[0][0] << "," << count_sort_times[0][1] << "," << count_sort_times[0][2] << "\n"; 
+
+    // Parallel Times 
+    times << quick_sort_times[1][0] << "," << quick_sort_times[1][1] << "," << quick_sort_times[1][2] << " " << 
+    bubble_sort_times[1][0] << "," <<  bubble_sort_times[1][1] << "," << bubble_sort_times[1][2] << " " << 
+    count_sort_times[1][0] << "," << count_sort_times[1][1] << "," << count_sort_times[1][2] << "\n"; 
+
+    times.close();
     return 0;
 }
