@@ -36,8 +36,8 @@ pip3 install matplotlib
 ## Compilation
 
 This project utilizes 16 threads for the completion of the parallel algorithms. In this case, it will be necessary to login to the schools remote server. 
-A sample output of running times has been provided within the projects root folder ("algo_times.csv"). To see the visualization of the times, without gathering a new list of times, 
-Run: ```python3 visualizer.py``` in the projects root folder. 
+A sample output of running times has been provided within the projects root folder ("algo_times.csv"). NOTE: *To see the visualization of the times, without gathering a new list of times,
+run:* ```python3 visualizer.py``` in the projects root folder. 
 
 
 ### Login to remote server
@@ -80,6 +80,8 @@ Paste the contents found on the remote desktop in the local CSV file ("algo_time
 
 Run: ```python3 visualizer.py```
 
-### Example Output: 
-*Picture goes here*
+### Example Output
+<img width="2089" alt="Screenshot 2023-12-07 at 5 25 46 PM" src="https://github.com/angyb00/Parallel-Sorting/assets/71093271/7f88457e-5e8f-4e41-b779-2567b9770917">
+
+
 
